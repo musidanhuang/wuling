@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>雾岭村旅游官网</title>
+<style>
+/* ============================================================
+ * 《雾岭》 样式层
+ * 前半段:2000 年代老式网站质感,越正常越瘆人
+ * 后半段:系统转暗,恐怖收束
+ * ============================================================ */
+
+:root {
+  --paper: #f1ede1;
+  --paper-dark: #e6e0cf;
+  --ink: #2b2a26;
+  --ink-soft: #55534a;
+  --link: #1f4e5f;
+  --link-visited: #4a2f5f;
+  --accent: #7d1f1f;
+  --line: #b9b2a0;
+  --blood: #a32020;
+  --void: #050505;
+  --fog: #8a8574;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--void);
+  min-height: 100%;
+  color-scheme: light;
+}
+
+body {
+  font-family: "Songti SC", "SimSun", "NSimSun", serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 通用布局 ---------- */
+.page {
+  min-height: 100%;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.paper {
+  background: var(--paper);
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 22px 60px;
+}
+
+/* ---------- 顶部进度徽章 ---------- */
+#progress {
+  position: fixed;
+  top: 12px; right: 12px;
+  background: rgba(10,10,10,.82);
+  color: #cfc8b4;
+  font-size: 12px;
+  letter-spacing: .12em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  z-index: 999;
+  border: 1px solid rgba(200,190,160,.25);
+  user-select: none;
+  transition: opacity .4s;
+}
+#progress.hidden { opacity: 0; pointer-events: none; }
+#progress .n { color: #e8dfc4; font-weight: bold; }
+
+/* ---------- 微信入口 ---------- */
+.phone {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #0a0a0a;
+  border-radius: 26px;
+  padding: 14px;
+  border: 1px solid #2e2e2e;
+}
+.phone-screen {
+  background: #f1f1f1;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.phone-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: #e3e3e3;
+  color: #1a1a1a;
+  font-size: 13px;
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+.phone-name { margin: 0 auto; font-weight: 600; }
+.chat {
+  padding: 16px 12px 18px;
+  height: 420px;
+  overflow-y: auto;
+  background: #ececec;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.msg {
+  max-width: 78%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.msg.friend {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #1a1a1a;
+  border: 1px solid #d9d9d9;
+  border-top-left-radius: 3px;
+}
+.msg.me {
+  align-self: flex-end;
+  background: #95ec69;
+  color: #1a1a1a;
+  border-top-right-radius: 3px;
+}
+.msg .t {
+  display: block;
+  font-size: 10px;
+  color: #999999;
+  margin-top: 5px;
+}
+.msg.link {
+  cursor: pointer;
+  border: 1px solid #6fae7f;
+  background: #d9f0de;
+  color: #1f4e2d;
+  transition: background .25s;
+}
+.msg.link:hover { background: #c2e6cc; }
+.wechat-note {
+  text-align: center;
+  color: #8a8574;
+  font-size: 11px;
+  margin-top: 14px;
+}
+.wechat-loading {
+  text-align: center;
+  color: #9a9384;
+  font-size: 12px;
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+  transition: opacity .8s;
+}
+.entry-badge {
+  text-align: center;
+  color: #cfc8b4;
+  font-size: 13px;
+  letter-spacing: .35em;
+  margin-bottom: 16px;
+}
+
+/* ---------- 官网 ---------- */
+.site-head {
+  text-align: center;
+  padding: 26px 0 8px;
+}
+.site-title {
+  font-size: 34px;
+  letter-spacing: .3em;
+  color: var(--ink);
+}
+.site-sub {
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin-top: 8px;
+  letter-spacing: .18em;
+}
+.mountains {
+  height: 120px;
+  margin: 18px 0 0;
+  background:
+    linear-gradient(135deg, transparent 44%, #9aa08c 45%, #9aa08c 55%, transparent 56%) 0 40px / 180px 90px no-repeat,
+    linear-gradient(225deg, transparent 44%, #7d8372 45%, #7d8372 55%, transparent 56%) 90px 30px / 200px 100px no-repeat,
+    linear-gradient(135deg, transparent 44%, #666d5c 45%, #666d5c 55%, transparent 56%) 210px 50px / 220px 100px no-repeat,
+    linear-gradient(225deg, transparent 44%, #8a907e 45%, #8a907e 55%, transparent 56%) 340px 20px / 190px 110px no-repeat;
+  background-color: #e8e4d6;
+  filter: saturate(.7);
+}
+.mountains::after {
+  content: '';
+  display: block;
+  height: 40px;
+  background: linear-gradient(180deg, rgba(241,237,225,.9), rgba(241,237,225,0));
+  transform: translateY(-40px);
+}
+.photo-cap {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-soft);
+  padding: 2px 0 14px;
+}
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+  margin: 16px 0 4px;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line);
+  padding: 4px;
+  background: #fff;
+}
+.photo-frame img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 125%;
+  max-width: none;
+  border: none;
+  padding: 0;
+  transform: translate(-4%, -6%);
+}
+.nav {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  padding: 9px 0;
+  margin: 8px 0 22px;
+  font-size: 15px;
+}
+a { color: var(--link); cursor: pointer; text-decoration: underline; }
+a:hover { color: var(--blood); }
+a:visited { color: var(--link-visited); }
+.intro p {
+  line-height: 1.9;
+  color: var(--ink);
+  margin-bottom: 14px;
+  text-indent: 2em;
+  font-size: 15px;
+}
+.site-foot {
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.visit-count { font-size: 11px; color: var(--ink-soft); text-align: right; }
+.graffiti {
+  margin-top: 26px;
+  text-align: right;
+  color: rgba(80,75,60,.28);
+  font-size: 12px;
+  user-select: none;
+}
+.graffiti b { color: rgba(80,75,60,.4); }
+
+/* ---------- 通用卡片 / 块 ---------- */
+.card {
+  background: var(--paper-dark);
+  border: 1px solid var(--line);
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+.card h2 { font-size: 17px; margin-bottom: 8px; letter-spacing: .05em; }
+.card p, .card li { font-size: 14px; line-height: 1.8; color: var(--ink); }
+.card .date { font-size: 11px; color: var(--ink-soft); display: block; margin-bottom: 8px; }
+.muted { color: var(--ink-soft); font-size: 12px; }
+
+.page-title {
+  font-size: 24px;
+  letter-spacing: .12em;
+  padding: 24px 0 4px;
+  text-align: center;
+}
+.page-sub { text-align: center; color: var(--ink-soft); font-size: 12px; margin-bottom: 22px; }
+
+/* 博客 */
+.posts { list-style: none; }
+.posts li {
+  padding: 14px 4px;
+  border-bottom: 1px dashed var(--line);
+}
+.posts li h3 { font-size: 15px; margin-bottom: 6px; }
+.posts li h3 a { color: var(--link); }
+.posts .date { font-size: 11px; color: var(--ink-soft); }
+.post-body {
+  white-space: pre-line;
+  line-height: 1.85;
+  font-size: 14px;
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.4);
+  border-left: 3px solid var(--line);
+}
+.comments { margin-top: 12px; padding: 10px 14px; background: rgba(255,255,255,.35); }
+.comments .c { font-size: 13px; line-height: 1.7; padding: 6px 0; border-bottom: 1px dotted var(--line); }
+.comments .c:last-child { border-bottom: none; }
+.comments .who { color: var(--link); font-size: 12px; }
+
+/* ---------- 搜索引擎 ---------- */
+.se-box {
+  text-align: center;
+  margin: 30px auto 10px;
+}
+.se-title {
+  font-size: 40px;
+  letter-spacing: .1em;
+  color: var(--ink);
+  font-weight: bold;
+}
+.se-title em { font-style: normal; color: var(--accent); }
+.se-tag { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+.se-form {
+  display: flex;
+  max-width: 480px;
+  margin: 18px auto 0;
+  border: 2px solid #b7ae93;
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+}
+.se-form input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-family: inherit;
+  background: transparent;
+}
+.se-form button {
+  border: none;
+  background: var(--link);
+  color: #fff;
+  padding: 0 20px;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: .15em;
+}
+.se-form button:hover { background: var(--blood); }
+.se-results { margin-top: 26px; text-align: left; }
+.se-results .res {
+  padding: 12px 6px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.se-results .res:hover { background: rgba(255,255,255,.5); }
+.se-results .res h4 { font-size: 16px; color: var(--link); font-weight: normal; }
+.se-results .res .url { font-size: 11px; color: #2e7d32; margin: 3px 0; }
+.se-results .res p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.se-results .none { color: var(--ink-soft); font-size: 14px; padding: 18px 6px; line-height: 1.8; }
+.se-tips {
+  margin-top: 26px;
+  font-size: 11px;
+  color: rgba(80, 75, 60, .3);
+  text-align: right;
+  letter-spacing: .05em;
+  user-select: none;
+}
+
+/* ---------- 论坛 ---------- */
+.forum-head {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+.forum-head .board { font-size: 12px; color: var(--ink-soft); }
+.forum-head h2 { font-size: 19px; margin-top: 4px; }
+.forum-head .meta { font-size: 11px; color: var(--ink-soft); margin-top: 6px; }
+.post {
+  background: #fff;
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+  padding: 12px 16px;
+}
+.post .who { font-weight: bold; font-size: 14px; color: var(--link); }
+.post .time { font-size: 11px; color: var(--ink-soft); margin-left: 10px; }
+.post .text { white-space: pre-line; line-height: 1.8; font-size: 14px; margin-top: 8px; }
+.post.official { border-left: 4px solid var(--accent); }
+.post.official .who { color: var(--accent); }
+.locked {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 12px;
+  border-top: 1px dashed var(--line);
+  margin-top: 8px;
+}
+.footer-hint {
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: rgba(255,255,255,.4);
+  border: 1px dashed var(--line);
+  padding: 10px 14px;
+}
+
+/* ---------- 登录 ---------- */
+.login-card {
+  max-width: 400px;
+  margin: 40px auto;
+  background: var(--paper-dark);
+  border: 1px solid var(--line);
+  padding: 30px 28px;
+  text-align: center;
+}
+.login-card h2 { font-size: 18px; margin-bottom: 6px; letter-spacing: .1em; }
+.login-card .desc { font-size: 12px; color: var(--ink-soft); margin-bottom: 22px; }
+.login-card input {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  background: #fff;
+  outline: none;
+  text-align: center;
+  letter-spacing: .3em;
+}
+.login-card input:focus { border-color: var(--link); }
+.login-card .btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 11px;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: .2em;
+  background: var(--link);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.login-card .btn:hover { background: var(--blood); }
+.login-err {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--blood);
+  min-height: 20px;
+}
+
+/* ---------- 名单页(系统转暗) ---------- */
+.sys {
+  background: #0a0b0c;
+  color: #b8bdb6;
+  min-height: 100vh;
+}
+.sys .wrap { padding-top: 30px; }
+.sys .page-title { color: #cfd6cc; }
+.sys .page-sub { color: #6d736c; }
+.sys-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 30px;
+  font-size: 13px;
+}
+.sys-table th, .sys-table td {
+  border: 1px solid #2c322c;
+  padding: 8px 10px;
+  text-align: left;
+}
+.sys-table th { background: #131614; color: #9aa39a; font-weight: normal; letter-spacing: .1em; }
+.sys-table tr.you td { color: #e8e0c8; background: rgba(163,32,32,.12); }
+.sys-table tr.you td:first-child { color: var(--blood); }
+.sys-table .st-bad { color: var(--blood); }
+.scan-line {
+  font-size: 13px;
+  line-height: 2;
+  color: #7f8a7f;
+  border-top: 1px solid #262b26;
+  padding-top: 14px;
+  margin-top: 6px;
+}
+.scan-line .k { color: #5c6b5c; }
+.scan-line .v { color: #c9d0c4; }
+.sys-question {
+  margin-top: 26px;
+  font-size: 17px;
+  letter-spacing: .25em;
+  text-align: center;
+  color: #d6dccf;
+}
+.sys-welcome {
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: .3em;
+  color: #e8e0c8;
+  margin: 10px 0;
+}
+.blink { animation: blink 1.1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+
+/* ---------- 结局:黑场 + 乱码 ---------- */
+.void-page { background: var(--void); min-height: 100vh; color: #333; }
+.glitch-box {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  font-family: "Consolas", "Courier New", monospace;
+  color: #4a4a4a;
+  font-size: 15px;
+  letter-spacing: .1em;
+  padding: 30px;
+}
+.glitch-box .g { color: #4a4a4a; }
+.glitch-box .g.bad { color: #7d1f1f; }
+
+/* ---------- 结局:满屏红色眼睛 ---------- */
+.eyes-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.2) 0%, rgba(0,0,0,.82) 100%);
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+.eyes-layer.on { opacity: 1; }
+.eye {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: eye-blink 2.6s ease-in-out infinite;
+}
+.eye .iris {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #7d1010 0%, #4d0808 50%, #230202 100%);
+  box-shadow: 0 0 14px rgba(120, 10, 10, .4);
+}
+.eye .pupil {
+  position: absolute;
+  width: 36%;
+  height: 36%;
+  left: 32%;
+  top: 32%;
+  border-radius: 50%;
+  background: #000;
+  animation: pupil-drift var(--pd, 7s) ease-in-out infinite alternate;
+}
+.eye .glint {
+  position: absolute;
+  width: 16%;
+  height: 16%;
+  left: 24%;
+  top: 20%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .9);
+}
+@keyframes eye-blink {
+  0%, 88%, 100% { transform: translate(-50%, -50%) scaleY(1); }
+  92% { transform: translate(-50%, -50%) scaleY(.05); }
+}
+@keyframes pupil-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(45%, 30%); }
+}
+.end-stage {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 24px;
+  background: #000;
+}
+.end-line {
+  color: #9aa09a;
+  font-size: 17px;
+  line-height: 2.1;
+  letter-spacing: .08em;
+  text-align: center;
+  min-height: 2.1em;
+  font-family: "Songti SC", "SimSun", serif;
+}
+.end-line .curs { display: inline-block; width: .5em; color: #6a726a; }
+.end-line.warm { color: #d8cfae; }
+.end-actions { margin-top: 44px; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.end-btn {
+  background: transparent;
+  border: 1px solid #333;
+  color: #777;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: .2em;
+  padding: 10px 34px;
+  cursor: pointer;
+  transition: all .3s;
+}
+.end-btn:hover { border-color: var(--blood); color: var(--blood); }
+.end-whisper {
+  margin-top: 40px;
+  font-size: 11px;
+  color: #2c2c2c;
+  letter-spacing: .12em;
+  text-align: center;
+  max-width: 320px;
+  line-height: 1.9;
+}
+
+/* ---------- 404 ---------- */
+.nf { text-align: center; padding-top: 90px; }
+.nf .code { font-size: 72px; color: var(--ink-soft); letter-spacing: .1em; }
+.nf .msg { font-size: 18px; margin: 10px 0 6px; }
+.nf .sub { font-size: 12px; color: var(--ink-soft); margin-bottom: 30px; }
+.nf .whisper {
+  margin-top: 70px;
+  color: rgba(85,80,65,.22);
+  font-size: 12px;
+  user-select: none;
+}
+
+/* ---------- 停留提示 / 雾角提示 ---------- */
+#lingering {
+  position: fixed;
+  bottom: 18px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(120,110,90,.55);
+  letter-spacing: .15em;
+  z-index: 998;
+  animation: fadeUp 1.4s ease forwards;
+  pointer-events: none;
+  white-space: nowrap;
+}
+@keyframes fadeUp { from { opacity: 0; } to { opacity: 1; } }
+
+/* 假崩溃遮罩 */
+#fx-layer {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 2000;
+}
+#fx-layer:not([hidden]) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#fx-layer .fx-text {
+  color: #111;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  letter-spacing: .15em;
+  text-align: center;
+  line-height: 2.2;
+}
+
+/* 响应式 */
+@media (max-width: 520px) {
+  .site-title { font-size: 26px; letter-spacing: .2em; }
+  .nav { gap: 14px; font-size: 13px; flex-wrap: wrap; }
+  .se-title { font-size: 30px; }
+  .sys-table { font-size: 11px; }
+  .end-line { font-size: 15px; }
+}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="app"></div>
+<div id="fx-layer" hidden></div>
+<script>
+/* ============================================================
+ * 《雾岭》 数据层
+ * 全部剧情文案 / 搜索词库 / 名单数据
+ * ============================================================ */
+
+const DATA = {
+
+  // ---------- 入口:伪造微信聊天 ----------
+  wechat: {
+    contact: '阿黎',
+    messages: [
+      { from: 'friend', time: '23:41', text: '雾岭村的云海真的绝了,给你看' },
+      { from: 'friend', time: '23:47', text: '村里人很热情,前台小姑娘还给我倒茶' },
+      { from: 'friend', time: '00:03', text: '……我觉得不太对劲' },
+      { from: 'friend', time: '00:05', text: '登记的时候她问我:第几位了' },
+      { from: 'friend', time: '00:06', text: '我说第 18 位。她笑了。' },
+      { from: 'friend', time: '00:08', text: '为什么要数名册?这个村根本没有那么多游客' },
+      { from: 'friend', time: '00:09', text: '别来雾岭。' },
+      { from: 'friend', time: '00:10', text: '如果你还是来了……' },
+      { from: 'friend', time: '00:11', link: true, text: '雾岭村旅游官网' },
+    ],
+    note: '消息发送于 3 天前。阿黎的手机从此关机。'
+  },
+
+  // ---------- 官网 ----------
+  home: {
+    title: '雾岭村欢迎您',
+    subtitle: '山清水秀 · 民风淳朴 · 欢迎下榻',
+    intro: [
+      '雾岭村坐落于群山之间,常年云雾缭绕。村中有百年老茶树、青石板路,以及一碗远近闻名的山茶。',
+      '这里没有城市的喧嚣,只有风声、水声,和夜晚的静谧。',
+      '雾岭村,适合想要安静的你。'
+    ],
+    photoCaption: '雾岭云海(摄于 2009 年)',
+    nav: [
+      { label: '首页', to: 'home' },
+      { label: '风景', to: 'scenery' },
+      { label: '住宿', to: 'stay' },
+      { label: '站内搜索', to: 'search' },
+      { label: '联系我们', to: '404' },
+    ],
+    footer: '©1998-2026 雾岭村旅游发展有限公司 · 备案号:雾ICP备00000017号',
+    graffiti: "搜「雾岭 失踪」",
+    oldLink: '旧版页面',
+    visitCount: '您是本站第 17 位访客'
+  },
+
+  // ---------- 七叔博客 ----------
+  blog: {
+    title: '七叔的博客',
+    subtitle: '记录雾岭村的日子',
+    posts: [
+      {
+        date: '2019-03-12',
+        title: '雾岭村大事记:1987 年,村里通了电',
+        body: '那年全村通电,镇上来人拉了线。老支书很高兴,说有了电,晚上就不怕了。\n那晚全村点灯,很亮。\n从那以后,雾岭村的晚上,确实再也没有人怕过。',
+        comments: [
+          { name: '过路人', text: '为什么要点灯才不怕?' }
+        ]
+      },
+      {
+        date: '2023-06-01',
+        title: '今年的游客比往年多',
+        body: '登记处的小周说,今年游客特别多,名单快记满了。\n我说好啊,人多热闹。\n她没接话。',
+        comments: []
+      },
+      {
+        date: '2023-09-18',
+        title: '访客名单是干什么用的?',
+        body: '我问过小周,名单记这么清楚干嘛。\n她说,怕客人走丢。\n我说雾岭村就这么大,怎么会走丢。\n她没说话,给我倒了杯茶。',
+        comments: [
+          { name: '匿名', text: '想来的先搜「雾岭 失踪」,我认真的。' },
+          { name: '匿名', text: '楼上别吓人,我正准备去' },
+          { name: '匿名', text: '劝你别去。' }
+        ]
+      },
+    ],
+    hint: '博客里有一篇讲「通电」的文章,年份好像很重要。'
+  },
+
+  // ---------- 内嵌搜索引擎 ----------
+  search: {
+    title: '搜狗狐',
+    tagline: '搜索,直达真相',
+    keywords: {
+      '雾岭': [
+        { title: '雾岭村旅游官网', url: 'wuling.gov.cn', snippet: '山清水秀,人间仙境,欢迎下榻……', to: 'home' },
+        { title: '七叔的博客', url: 'blog.wuling.gov.cn', snippet: '雾岭村本地人,记录村里日常。', to: 'blog' },
+      ],
+      '雾岭村': [
+        { title: '雾岭村旅游官网', url: 'wuling.gov.cn', snippet: '山清水秀,人间仙境,欢迎下榻……', to: 'home' },
+        { title: '七叔的博客', url: 'blog.wuling.gov.cn', snippet: '雾岭村本地人,记录村里日常。', to: 'blog' },
+      ],
+      '失踪': [
+        { title: '雾岭村游客失踪,官方回应"无异常"', url: 'news.wuling.gov.cn', snippet: '记者致电雾岭村旅游发展有限公司,对方表示:详情不予公布。', to: 'forum' },
+        { title: '论坛:有人去过雾岭村吗', url: 'bbs.wuling.gov.cn', snippet: '楼主已三年未上线。', to: 'forum' },
+      ],
+      '雾岭 失踪': [
+        { title: '论坛:有人去过雾岭村吗', url: 'bbs.wuling.gov.cn', snippet: '楼主已三年未上线。回帖里有人只说了两个字。', to: 'forum' },
+        { title: '雾岭村游客失踪,官方回应"无异常"', url: 'news.wuling.gov.cn', snippet: '记者致电雾岭村旅游发展有限公司,对方表示:详情不予公布。', to: 'forum' },
+      ],
+      '七叔': [
+        { title: '七叔的博客', url: 'blog.wuling.gov.cn', snippet: '雾岭村本地人,记录村里日常。', to: 'blog' },
+      ],
+      '访客': [
+        { title: '雾岭村访客登记系统(管理端)', url: 'registry.wuling.gov.cn', snippet: '需要管理员密码。', to: 'login' },
+      ],
+      '登记': [
+        { title: '雾岭村访客登记系统(管理端)', url: 'registry.wuling.gov.cn', snippet: '需要管理员密码。', to: 'login' },
+      ],
+      '1987': [
+        { title: '雾岭村大事记:1987 年,村里通了电', url: 'blog.wuling.gov.cn', snippet: '那年全村通电。老支书说,有了电,晚上就不怕了。', to: 'blog' },
+      ],
+      '阿黎': [
+        { title: '没有找到「阿黎」相关结果', url: '', snippet: '但是,这个关键词被搜索过 17 次。', to: '' },
+      ],
+      '献祭': [
+        { title: '没有找到「献祭」相关结果', url: '', snippet: '搜索记录显示:IP 114.51.4.14 曾搜索过该词,共 3 次。', to: '' },
+      ],
+      '名单': [
+        { title: '雾岭村访客登记系统(管理端)', url: 'registry.wuling.gov.cn', snippet: '需要管理员密码。密码线索藏在七叔的博客里。', to: 'login' },
+      ],
+      '第18位': [
+        { title: '没有找到「第18位」相关结果', url: '', snippet: '不过,您来得正好。', to: '' },
+      ],
+    },
+    fallback: '未找到与「{q}」相关的结果。要不,换个词试试?',
+    tips: [
+      '站内索引:雾岭 · 失踪 · 访客 · 七叔',
+    ]
+  },
+
+  // ---------- 论坛帖 ----------
+  forum: {
+    board: '旅游闲聊版',
+    title: '有人去过雾岭村吗',
+    meta: '山外人 · 发布于 2023-10-02 · 最后回复 2023-10-05',
+    posts: [
+      { name: '山外人', time: '2023-10-02 14:32', text: '2023 年国庆去的雾岭村。村里就一条街,一个登记处。\n登记的时候,前台小姑娘问我:第几位了?\n我数了数墙上的名单,说:第 18 位。\n她笑了一下,说:欢迎。\n回来之后越想越不对,那个村,根本没有直达车,我是徒步走进去的。' },
+      { name: '山外人', time: '2023-10-02 14:40', text: '补充:我去的那天,名单上已经有 17 个名字了。' },
+      { name: '热心市民', time: '2023-10-03 09:12', text: '楼主还在吗?' },
+      { name: '热心市民', time: '2023-10-04 22:47', text: '3 年了,楼主没再上线。' },
+      { name: '雾岭村旅游发展有限公司', time: '2023-10-05 08:00', text: '感谢您对雾岭村的支持!欢迎再来!' },
+      { name: '热心市民', time: '2023-10-05 08:01', text: '……楼上这条回复,是我见过最瘆人的。' },
+    ],
+    footer: '管理员账号:wuling_admin · 密码线索:村里通上电的那一年',
+    locked: '本帖已锁定,仅管理员可回复。'
+  },
+
+  // ---------- 登录 ----------
+  login: {
+    title: '雾岭村访客登记系统',
+    desc: '管理端 · 请输入管理员密码以查看访客名单',
+    placeholder: '请输入密码',
+    fail: '密码错误。',
+    failMore: '不对。你再想想。',
+    hint: '提示:调查一下雾岭失踪。',
+    ok: '验证通过,正在载入名单……'
+  },
+
+  // ---------- 名单 ----------
+  log: {
+    title: '雾岭村访客登记表',
+    head: ['编号', '姓名', '入住时间', '状态', '备注'],
+    rows: [
+      { n: '1', name: '■', in: '2009-04-11', st: '已退房', note: '' },
+      { n: '2', name: '■', in: '2011-09-02', st: '已退房', note: '' },
+      { n: '3', name: '■', in: '2012-12-24', st: '已退房', note: '' },
+      { n: '4', name: '■', in: '2014-05-19', st: '已退房', note: '' },
+      { n: '5', name: '■', in: '2015-08-30', st: '已退房', note: '' },
+      { n: '6', name: '■', in: '2016-02-14', st: '已退房', note: '' },
+      { n: '7', name: '■', in: '2017-10-01', st: '已退房', note: '' },
+      { n: '8', name: '■', in: '2018-07-07', st: '已退房', note: '' },
+      { n: '9', name: '■', in: '2019-11-11', st: '已退房', note: '' },
+      { n: '10', name: '■', in: '2020-03-08', st: '已退房', note: '' },
+      { n: '11', name: '■', in: '2021-06-06', st: '已退房', note: '' },
+      { n: '12', name: '■', in: '2021-12-31', st: '已退房', note: '' },
+      { n: '13', name: '■', in: '2022-04-04', st: '已退房', note: '' },
+      { n: '14', name: '■', in: '2022-09-09', st: '已退房', note: '' },
+      { n: '15', name: '■', in: '2023-01-22', st: '已退房', note: '' },
+      { n: '16', name: '■', in: '2023-10-02', st: '已退房', note: '「第 18 位」。他数错了。' },
+      { n: '17', name: '阿黎', in: '2026-07-21', st: '未退房', note: '她说她看见了不该看的东西。', you: true },
+      { n: '18', name: '……', in: '登记中', st: '…', note: '', you: true },
+    ],
+    scanning: '正在读取您的设备信息……',
+    welcome: '欢迎,第 18 位访客。',
+    question: '雾岭村没有车站,你是怎么来的?',
+    devtoolsLine: '你打开了开发者工具。这个系统的日志,不是给开发者看的。',
+    youRow: '访客(你)',
+  },
+
+  // ---------- 结局 ----------
+  end: {
+    glitchLines: [
+      '0x1F4 雾岭村不存在于任何地图',
+      'ERROR: registry overflow 18/17',
+      'wuling.exe 正在向您问好',
+      '别数了。数不清的。',
+      '你看见我的时候,我也在看你。',
+    ],
+    lines: [
+      '阿黎说,别来雾岭。',
+      '可你已经来了。',
+      '你用的是 {browser},系统是 {os}。',
+      '时区 {tz}。',
+      '你第一次打开这里,是在 {first}。',
+      '现在 {now}。你在这里待了 {dur}。',
+      '你一共点击了 {clicks} 次,移动了 {moves} 次鼠标。',
+      '我数过了。',
+      '第 17 位客人走丢了。',
+      '第 18 位,来自 {city} 的你。',
+      '晚安。',
+      '……明天见。',
+    ],
+    devtoolsLine: '你果然打开了开发者工具。你比我想象中聪明。',
+    closeBtn: '关闭页面',
+    closeReply: '关不掉的。晚安。',
+    consoleMsg: [
+      '%c 雾岭村旅游官网 %c',
+      '你打开了控制台。',
+      '这里的日志不是给开发者看的。',
+      '是给「访客」看的。',
+      '顺便说一句:这个页面本身,也是线索。',
+      '祝你玩得开心。也祝你能离开。',
+    ]
+  },
+
+  // ---------- 404 ----------
+  p404: {
+    title: '404',
+    msg: '页面不存在。',
+    sub: '您访问的页面可能已被移除,或从未存在过。',
+    back: '返回首页',
+    whisper: '你是我今天第 18 位访客。',
+  }
+};
+
+</script>
+<script>
+/* ============================================================
+ * 《雾岭》 引擎层
+ * 路由 / 状态 / 指纹 / meta 机制 / 音效 / 视图渲染
+ * ============================================================ */
+(function () {
+  'use strict';
+
+  /* ================= 工具 ================= */
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function fmtTime(ts) {
+    var d = new Date(ts);
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function fmtDur(ms) {
+    var s = Math.floor(ms / 1000);
+    if (s < 60) return s + ' 秒';
+    return Math.floor(s / 60) + ' 分 ' + (s % 60) + ' 秒';
+  }
+
+  /* ================= 状态 ================= */
+
+  var LS_KEY = 'wuling_save_v1';
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY)); } catch (e) { return null; }
+  }
+  function saveState() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  var state = loadState() || { clues: [], firstSeen: Date.now(), visits: 0, pwdFails: 0, lingeringShown: false };
+  state.visits += 1;
+  saveState();
+  var sessionStart = Date.now();
+  var geo = { address: '', country: '', province: '', city: '', district: '', street: '', lat: 0, lng: 0, denied: false };
+
+  function buildAddress(parts) {
+    var out = [];
+    for (var i = 0; i < parts.length; i++) {
+      var s = String(parts[i] == null ? '' : parts[i]).trim();
+      if (s && out.indexOf(s) < 0) out.push(s);
+    }
+    return out.join(' ');
+  }
+
+  /* 逆地理编码:先用 Nominatim(可精确到街道/门牌,中文简体),超时或失败再回退 BigDataCloud(行政级) */
+  function reverseGeocode(lat, lng, done) {
+    var settled = false;
+    var callDone = function () {
+      if (!settled) { settled = true; if (done) done(); }
+    };
+    var runBig = function () { bigDataReverse(lat, lng, callDone); };
+    var nomiTimer = setTimeout(runBig, 3000);
+    var nUrl = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng + '&zoom=18&addressdetails=1&accept-language=zh-CN';
+    fetch(nUrl, { headers: { 'Accept-Language': 'zh-CN' } }).then(function (r) { return r.json(); }).then(function (d) {
+      if (settled) return;
+      clearTimeout(nomiTimer);
+      if (parseNominatim(d)) { callDone(); } else { runBig(); }
+    }).catch(function () {
+      if (!settled) { clearTimeout(nomiTimer); runBig(); }
+    });
+  }
+
+  /* 解析 Nominatim:display_name 是「街道, 区, 市, 省, 邮编, 国」,反转后即为从大到小的完整地址 */
+  function parseNominatim(d) {
+    if (!d || (!d.address && !d.display_name)) return false;
+    var a = d.address || {};
+    var cityName = a.city || a.town || a.village || a.municipality || a.county || '';
+    var countyName = (a.county && cityName && a.county !== cityName) ? a.county : '';
+    var districtName = (a.district && a.district !== cityName && a.district !== countyName) ? a.district : '';
+    var suburbName = (a.suburb && a.suburb !== districtName && a.suburb !== cityName && a.suburb !== countyName) ? a.suburb : '';
+    var hoodName = (a.neighbourhood && a.neighbourhood !== suburbName) ? a.neighbourhood : '';
+    var roadName = (a.road || '') + (a.house_number ? ' ' + a.house_number : '');
+    geo.country = a.country || '';
+    geo.province = a.state || a.region || '';
+    geo.city = cityName;
+    geo.district = countyName || districtName || suburbName || hoodName;
+    geo.street = roadName;
+    var addr = '';
+    if (d.display_name) {
+      addr = d.display_name.split(',').map(function (s) { return s.trim(); })
+        .filter(function (s) { return s && !/^\d{3,6}$/.test(s); })
+        .reverse().join(' ');
+    }
+    if (!addr) {
+      addr = buildAddress([geo.country, geo.province, cityName, countyName, districtName, suburbName, hoodName, roadName]);
+    }
+    if (!addr) return false;
+    geo.address = addr;
+    return true;
+  }
+
+  /* 兜底:BigDataCloud 行政级逆地理编码 */
+  function bigDataReverse(lat, lng, done) {
+    var bdTimer = setTimeout(done, 4000);
+    var url = 'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lng + '&localityLanguage=zh-CN';
+    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      clearTimeout(bdTimer);
+      if (d && (d.city || d.locality || d.principalSubdivision)) {
+        geo.country = d.countryName || '';
+        geo.province = d.principalSubdivision || '';
+        geo.city = d.subdivision || d.city || '';
+        geo.district = d.locality || d.city || '';
+        var addr = buildAddress([geo.country, geo.province, d.subdivision, d.city, d.locality, d.postcode]);
+        if (addr) geo.address = addr;
+      }
+      done();
+    }).catch(function () { clearTimeout(bdTimer); done(); });
+  }
+
+  function ipFallback(done) {
+    fetch('https://ip-api.com/json/?lang=zh-CN').then(function (r) { return r.json(); }).then(function (d) {
+      if (d && d.status === 'success') {
+        geo.country = d.country || '';
+        geo.province = d.regionName || '';
+        geo.city = d.city || '';
+        geo.lat = d.lat || 0;
+        geo.lng = d.lon || 0;
+        geo.address = buildAddress([geo.country, geo.province, geo.city]);
+      }
+      done();
+    }).catch(function () { done(); });
+  }
+
+  function fetchLocation(done) {
+    var finished = false;
+    var finish = function () {
+      if (!finished) { finished = true; if (done) done(); }
+    };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        geo.lat = pos.coords.latitude;
+        geo.lng = pos.coords.longitude;
+        reverseGeocode(geo.lat, geo.lng, finish);
+        setTimeout(finish, 8000);
+      }, function () {
+        geo.denied = true;
+        ipFallback(finish);
+      }, { timeout: 6000, maximumAge: 120000 });
+      setTimeout(finish, 12000);
+    } else {
+      ipFallback(finish);
+    }
+  }
+
+  var CLUE_TOTAL = 6;
+
+  /* ================= 指纹 ================= */
+
+  var fp = (function () {
+    var ua = navigator.userAgent;
+    var browser = '浏览器';
+    if (/Edg\//.test(ua)) browser = 'Edge';
+    else if (/Chrome\//.test(ua)) browser = 'Chrome';
+    else if (/Firefox\//.test(ua)) browser = 'Firefox';
+    else if (/Safari\//.test(ua)) browser = 'Safari';
+    var os = '系统';
+    if (/Windows NT/.test(ua)) os = 'Windows';
+    else if (/Mac OS X/.test(ua)) os = 'macOS';
+    else if (/Android/.test(ua)) os = 'Android';
+    else if (/iPhone|iPad/.test(ua)) os = 'iOS';
+    else if (/Linux/.test(ua)) os = 'Linux';
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '未知'; } catch (e) { tz = '未知'; }
+    return {
+      browser: browser,
+      os: os,
+      tz: tz,
+      lang: navigator.language || ''
+    };
+  })();
+
+  /* ================= 计数器 ================= */
+
+  var counter = { clicks: 0, moves: 0 };
+  var moveTick = 0;
+  window.addEventListener('click', function () {
+    counter.clicks += 1;
+    ensureAudio();
+  });
+  window.addEventListener('mousemove', function () {
+    moveTick += 1;
+    if (moveTick % 25 === 0) counter.moves += 1;
+  });
+  window.addEventListener('keydown', function () { ensureAudio(); });
+
+  /* ================= DevTools 检测 ================= */
+
+  var devtoolsOpen = false;
+  var devtoolsNotified = false;
+  function detectDevtools() {
+    var w = window.outerWidth - window.innerWidth;
+    var h = window.outerHeight - window.innerHeight;
+    if (w > 150 && h > 150) {
+      if (!devtoolsOpen) {
+        devtoolsOpen = true;
+        if (!devtoolsNotified) {
+          devtoolsNotified = true;
+          var el = document.querySelector('.sys .devtools-note');
+          if (el) el.textContent = DATA.log.devtoolsLine;
+        }
+      }
+    }
+  }
+  setInterval(detectDevtools, 1200);
+
+  /* ================= 音效(Web Audio 合成) ================= */
+
+  var audio = { ctx: null, heartTimer: null, droneNodes: null, ready: false };
+  function ensureAudio() {
+    if (audio.ready) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      audio.ctx = new AC();
+      audio.ready = true;
+    } catch (e) {}
+  }
+  function tone(freq, dur, type, vol, when) {
+    if (!audio.ready) return;
+    var ctx = audio.ctx;
+    var t = ctx.currentTime + (when || 0);
+    var o = ctx.createOscillator();
+    var g = ctx.createGain();
+    o.type = type || 'sine';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || 0.05, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function clickSfx() { tone(880, 0.05, 'square', 0.03); }
+  function msgSfx() { tone(1318, 0.07, 'triangle', 0.09); tone(988, 0.12, 'triangle', 0.09, 0.1); }
+  function badSfx() { tone(140, 0.3, 'sawtooth', 0.06); tone(90, 0.35, 'sawtooth', 0.06, 0.08); }
+  function goodSfx() { tone(520, 0.15, 'sine', 0.05); tone(780, 0.2, 'sine', 0.05, 0.12); }
+  function glitchSfx() {
+    if (!audio.ready) return;
+    var ctx = audio.ctx;
+    var len = ctx.sampleRate * 0.4;
+    var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    var d = buf.getChannelData(0);
+    for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * 0.12;
+    var src = ctx.createBufferSource();
+    src.buffer = buf;
+    var g = ctx.createGain();
+    g.gain.value = 0.5;
+    src.connect(g); g.connect(ctx.destination);
+    src.start();
+  }
+  function startHeartbeat() {
+    stopHeartbeat();
+    if (!audio.ready) return;
+    audio.heartTimer = setInterval(function () {
+      tone(58, 0.14, 'sine', 0.32);
+      tone(48, 0.18, 'sine', 0.24, 0.16);
+    }, 1100);
+  }
+  function stopHeartbeat() {
+    if (audio.heartTimer) { clearInterval(audio.heartTimer); audio.heartTimer = null; }
+  }
+  function startDrone() {
+    if (!audio.ready || audio.droneNodes) return;
+    var ctx = audio.ctx;
+    var o1 = ctx.createOscillator();
+    var o2 = ctx.createOscillator();
+    var g = ctx.createGain();
+    o1.type = 'sawtooth'; o1.frequency.value = 147;
+    o2.type = 'sawtooth'; o2.frequency.value = 147.7;
+    g.gain.value = 0.09;
+    var f = ctx.createBiquadFilter();
+    f.type = 'lowpass'; f.frequency.value = 300;
+    o1.connect(g); o2.connect(g); g.connect(f); f.connect(ctx.destination);
+    o1.start(); o2.start();
+    audio.droneNodes = [o1, o2, g];
+  }
+  function stopDrone() {
+    if (!audio.droneNodes) return;
+    try { audio.droneNodes.forEach(function (n) { n.stop && n.stop(); }); } catch (e) {}
+    audio.droneNodes = null;
+  }
+
+  /* ================= 线索与进度 ================= */
+
+  function collect(id) {
+    if (state.clues.indexOf(id) >= 0) return;
+    state.clues.push(id);
+    saveState();
+    updateProgress();
+  }
+  function hasClue(id) { return state.clues.indexOf(id) >= 0; }
+  function updateProgress() {
+    var el = $('progress');
+    if (!el) return;
+    var n = state.clues.length;
+    if (n >= CLUE_TOTAL) { el.classList.add('hidden'); return; }
+    el.classList.remove('hidden');
+    el.innerHTML = '线索 <span class="n">' + n + '</span> / ' + CLUE_TOTAL;
+  }
+
+  /* ================= 路由 ================= */
+
+  var app = $('app');
+  var TITLES = {
+    '': '阿黎',
+    home: '雾岭村旅游官网',
+    scenery: '雾岭风光 - 雾岭村旅游官网',
+    stay: '住宿指南 - 雾岭村旅游官网',
+    blog: '七叔的博客 - 雾岭村',
+    search: '搜狗狐',
+    forum: '有人去过雾岭村吗 - 旅游闲聊版',
+    login: '雾岭村访客登记系统',
+    log: '雾岭村访客登记表',
+    end: '雾岭村旅游官网',
+    '404': '404 - 雾岭村旅游官网'
+  };
+
+  function router() {
+    var h = location.hash.replace(/^#\/?/, '');
+    if (!TITLES[h]) h = '404';
+    if (h !== '404' && !TITLES[h]) h = '';
+    document.title = TITLES[h] || '雾岭村旅游官网';
+    stopLingering();
+    var renderer = VIEWS[h] || VIEWS['404'];
+    app.innerHTML = renderer();
+    if (renderer.after) renderer.after();
+    window.scrollTo(0, 0);
+  }
+
+  function go(name) {
+    clickSfx();
+    location.hash = '#/' + name;
+  }
+
+  window.addEventListener('hashchange', router);
+
+  /* ================= 停留监控 ================= */
+
+  var lingerTimer = null;
+  function watchLingering() {
+    if (state.lingeringShown) return;
+    lingerTimer = setTimeout(function () {
+      if (state.lingeringShown) return;
+      state.lingeringShown = true;
+      saveState();
+      var el = document.createElement('div');
+      el.id = 'lingering';
+      el.textContent = '你比大多数游客待得久。';
+      document.body.appendChild(el);
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 26000);
+    }, 60000);
+  }
+  function stopLingering() {
+    if (lingerTimer) { clearTimeout(lingerTimer); lingerTimer = null; }
+  }
+
+  /* ================= 视图 ================= */
+
+  var VIEWS = {};
+
+  /* --- 微信入口 --- */
+  VIEWS[''] = function () {
+    return '<div class="page" style="background:#000;padding:44px 24px 60px;">' +
+      '<div class="entry-badge">雾岭村 · 访客入口</div>' +
+      '<div class="wechat-loading" id="wechat-loading">点击屏幕,开始接收消息…</div>' +
+      '<div class="phone"><div class="phone-screen">' +
+      '<div class="phone-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>' +
+      '<span class="phone-name">' + esc(DATA.wechat.contact) + '</span><span></span></div>' +
+      '<div class="chat" id="chat"></div>' +
+      '</div></div>' +
+      '<p class="wechat-note">' + esc(DATA.wechat.note) + '</p>' +
+      '</div>';
+  };
+  VIEWS[''].after = function () {
+    var started = false;
+    var pageEl = document.querySelector('.page');
+    var startFn = function () {
+      if (started) return;
+      started = true;
+      ensureAudio();
+      playWechatMessages();
+    };
+    if (pageEl) pageEl.addEventListener('click', startFn);
+  };
+
+  function playWechatMessages() {
+    var chat = $('chat');
+    var ld = $('wechat-loading');
+    if (!chat) return;
+    if (ld) ld.textContent = '正在接收消息…';
+    var msgs = DATA.wechat.messages;
+    msgs.forEach(function (m, i) {
+      setTimeout(function () {
+        appendMsg(chat, m);
+        msgSfx();
+        if (i === msgs.length - 1) {
+          setTimeout(function () { if (ld) ld.style.opacity = '0'; }, 900);
+        }
+      }, 400 + i * 750);
+    });
+  }
+
+  function appendMsg(chat, m) {
+    var div = document.createElement('div');
+    var cls = m.from === 'friend' ? 'friend' : 'me';
+    if (m.link) cls += ' link';
+    div.className = 'msg ' + cls;
+    var body = m.link ? '<a class="lnk-msg">' + esc(m.text) + '</a>' : esc(m.text);
+    div.innerHTML = body + '<span class="t">' + m.time + '</span>';
+    chat.appendChild(div);
+    if (m.link) {
+      var link = div.querySelector('.lnk-msg');
+      link.addEventListener('click', function () {
+        collect('msg');
+        go('home');
+      });
+    }
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  /* --- 官网 --- */
+  VIEWS.home = function () {
+    var nav = DATA.home.nav.map(function (n) {
+      return '<a href="javascript:void(0)" onclick="App.go(\'' + n.to + '\')">' + esc(n.label) + '</a>';
+    }).join(' · ');
+    var intro = DATA.home.intro.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
+    return '<div class="page paper">' +
+      '<div class="wrap">' +
+      '<div class="site-head"><div class="site-title">' + esc(DATA.home.title) + '</div>' +
+      '<div class="site-sub">' + esc(DATA.home.subtitle) + '</div></div>' +
+      '<div class="mountains"></div>' +
+      '<div class="photo-cap">' + esc(DATA.home.photoCaption) + '</div>' +
+      '<div class="nav">' + nav + '</div>' +
+      '<div class="intro">' + intro + '</div>' +
+      '<div class="card" style="text-align:center;font-size:13px;color:#55534a;">' +
+      '本村无车站,仅一条徒步山路可至。入村请先至游客登记处登记。<br>' +
+      '<span style="font-size:11px;color:#8a8574;">登记处工作时间:全天</span></div>' +
+      '<div class="graffiti">' + DATA.home.graffiti.replace(/「(.*?)」/g, '<b>「$1」</b>') + '</div>' +
+      '<div class="site-foot"><span>' + esc(DATA.home.footer) + '</span>' +
+      '<a href="javascript:void(0)" onclick="App.go(\'blog\')">' + esc(DATA.home.oldLink) + '</a></div>' +
+      '<div class="visit-count">' + esc(DATA.home.visitCount) + '</div>' +
+      '</div></div>';
+  };
+  VIEWS.home.after = function () { watchLingering(); };
+
+  /* --- 风景 --- */
+  VIEWS.scenery = function () {
+    return '<div class="page paper"><div class="wrap">' +
+      '<div class="page-title">雾岭风光</div>' +
+      '<div class="page-sub">山外有山,雾外有雾</div>' +
+      '<div class="photo-frame"><img src="https://public.ysjf.com/product/preview/GgvVEDstz8.jpg" alt="雾岭云海"></div>' +
+      '<div class="photo-cap">雾岭云海(摄于 2009 年)</div>' +
+      '<div class="intro">' +
+      '<p>雾岭村四面环山,晨起云海翻涌,远山如墨。午间山风穿过青石巷,带着老茶树的清苦香气。</p>' +
+      '<p>村里的老人说,雾岭的雾,下午四点以后才起。傍晚的山路,要跟着人走,不要跟着灯走。</p>' +
+      '</div>' +
+      '<div class="card"><h2>村中景致</h2>' +
+      '<ul style="line-height:2.2;font-size:14px;list-style:none;padding:0;">' +
+      '<li>· 望云台 —— 村东高处,观云海最佳处,需村民带领。</li>' +
+      '<li>· 古茶林 —— 百年老茶树,春日采茶,茶汤清苦回甘。</li>' +
+      '<li>· 青石巷 —— 村中主路,雨后石板反光,夜里少走。</li>' +
+      '<li>· 山神庙 —— 村北山腰,香火从未断过。<span style="color:#7d1f1f;">修缮中,暂不对游客开放。</span></li>' +
+      '</ul></div>' +
+      '<div class="graffiti" style="text-align:left;margin-top:22px;">' +
+      '<span style="color:rgba(80,75,60,.4);">傍晚的山路,不要跟着灯走。</span></div>' +
+      '<div class="site-foot" style="margin-top:34px;"><span>©1998-2026 雾岭村旅游发展有限公司</span>' +
+      '<a href="javascript:void(0)" onclick="App.go(\'home\')">返回首页</a></div>' +
+      '</div></div>';
+  };
+  VIEWS.scenery.after = function () { watchLingering(); };
+
+  /* --- 住宿 --- */
+  VIEWS.stay = function () {
+    return '<div class="page paper"><div class="wrap">' +
+      '<div class="page-title">住宿指南</div>' +
+      '<div class="page-sub">床位有限,请提前登记</div>' +
+      '<div class="card"><h2>村内民宿</h2>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:14px;">' +
+      '<tr style="border-bottom:1px solid #b9b2a0;"><td style="padding:10px 6px;">雾岭客栈</td><td style="padding:10px 6px;">村口,登记处隔壁</td><td style="padding:10px 6px;">80 元/晚</td></tr>' +
+      '<tr style="border-bottom:1px solid #b9b2a0;"><td style="padding:10px 6px;">云来客栈</td><td style="padding:10px 6px;">村中,临青石巷</td><td style="padding:10px 6px;">60 元/晚</td></tr>' +
+      '<tr><td style="padding:10px 6px;">七叔家</td><td style="padding:10px 6px;">村北,山神庙脚下</td><td style="padding:10px 6px;">只招待熟人</td></tr>' +
+      '</table></div>' +
+      '<div class="card"><h2>温馨提示</h2>' +
+      '<p style="font-size:13px;line-height:2;">· 入村请先至登记处登记,领取房牌号。<br>' +
+      '· 退房请提前一天告知,便于登记处更新名单。<br>' +
+      '· 长期住宿可享优惠,详询登记处。</p>' +
+      '</div>' +
+      '<div class="footer-hint">云来客栈 2 号房:2026-07-21 入住,至今未退房。房客留言:想再看看雾。</div>' +
+      '<div class="site-foot" style="margin-top:34px;"><span>©1998-2026 雾岭村旅游发展有限公司</span>' +
+      '<a href="javascript:void(0)" onclick="App.go(\'home\')">返回首页</a></div>' +
+      '</div></div>';
+  };
+  VIEWS.stay.after = function () { watchLingering(); };
+
+  /* --- 博客 --- */
+  VIEWS.blog = function () {
+    var posts = DATA.blog.posts.map(function (p, i) {
+      var body = esc(p.body);
+      var comments = p.comments.length
+        ? '<div class="comments">' + p.comments.map(function (c) {
+            return '<div class="c"><span class="who">' + esc(c.name) + '</span>: ' + esc(c.text) + '</div>';
+          }).join('') + '</div>'
+        : '';
+      return '<li data-p="' + i + '"><h3><a href="javascript:void(0)" onclick="App.blogOpen(' + i + ')">' +
+        esc(p.title) + '</a></h3><span class="date">' + esc(p.date) + '</span>' +
+        '<div class="post-body">' + body + '</div>' + comments + '</li>';
+    }).join('');
+    return '<div class="page paper"><div class="wrap">' +
+      '<div style="font-size:12px;margin-bottom:12px;"><a href="javascript:void(0)" onclick="App.back()">← 返回上一级</a></div>' +
+      '<div class="page-title">' + esc(DATA.blog.title) + '</div>' +
+      '<div class="page-sub">' + esc(DATA.blog.subtitle) + '</div>' +
+      '<ul class="posts">' + posts + '</ul>' +
+      '<div class="footer-hint">' + esc(DATA.blog.hint) + '<br>' +
+      '<a href="javascript:void(0)" onclick="App.go(\'search\')">站内搜索</a></div>' +
+      '</div></div>';
+  };
+  VIEWS.blog.after = function () {
+    if (!hasClue('blog')) {
+      setTimeout(function () { collect('blog'); }, 600);
+    }
+    watchLingering();
+  };
+
+  /* --- 搜索引擎 --- */
+  VIEWS.search = function () {
+    var tips = DATA.search.tips.join(' · ');
+    return '<div class="page paper"><div class="wrap">' +
+      '<div class="se-box"><div class="se-title">搜<em>狗</em>狐</div>' +
+      '<div class="se-tag">' + esc(DATA.search.tagline) + '</div>' +
+      '<form class="se-form" onsubmit="App.doSearch();return false;">' +
+      '<input type="text" id="se-input" placeholder="输入关键词搜索" autocomplete="off">' +
+      '<button type="submit">搜索</button></form></div>' +
+      '<div class="se-results" id="se-results"><p class="none" style="border:none;">' +
+      '请输入关键词开始搜索。</p></div>' +
+      '<div class="se-tips">' + esc(tips) + '</div>' +
+      '<div class="site-foot"><span>©1998-2026 雾岭村旅游发展有限公司</span>' +
+      '<a href="javascript:void(0)" onclick="App.go(\'home\')">返回首页</a></div>' +
+      '</div></div>';
+  };
+  VIEWS.search.after = function () {
+    var inp = $('se-input');
+    if (inp) inp.focus();
+  };
+
+  /* --- 论坛 --- */
+  VIEWS.forum = function () {
+    var posts = DATA.forum.posts.map(function (p, i) {
+      var cls = p.name === '雾岭村旅游发展有限公司' ? 'post official' : 'post';
+      return '<div class="' + cls + '"><span class="who">' + esc(p.name) + '</span>' +
+        '<span class="time">' + esc(p.time) + '</span><div class="text">' + esc(p.text) + '</div></div>';
+    }).join('');
+    return '<div class="page paper"><div class="wrap">' +
+      '<div style="font-size:12px;margin-bottom:12px;"><a href="javascript:void(0)" onclick="App.back()">← 返回上一级</a></div>' +
+      '<div class="forum-head"><div class="board">' + esc(DATA.forum.board) + '</div>' +
+      '<h2>' + esc(DATA.forum.title) + '</h2><div class="meta">' + esc(DATA.forum.meta) + '</div></div>' +
+      posts +
+      '<div class="locked">' + esc(DATA.forum.locked) + '</div>' +
+      '<div class="footer-hint">' + esc(DATA.forum.footer) + '</div>' +
+      '</div></div>';
+  };
+  VIEWS.forum.after = function () {
+    if (!hasClue('forum')) {
+      setTimeout(function () { collect('forum'); }, 600);
+    }
+    watchLingering();
+  };
+
+  /* --- 登录 --- */
+  VIEWS.login = function () {
+    return '<div class="page paper"><div class="wrap">' +
+      '<div style="font-size:12px;margin-bottom:12px;"><a href="javascript:void(0)" onclick="App.back()">← 返回上一级</a></div>' +
+      '<div class="login-card">' +
+      '<h2>' + esc(DATA.login.title) + '</h2>' +
+      '<div class="desc">' + esc(DATA.login.desc) + '</div>' +
+      '<input type="password" id="pwd" placeholder="' + esc(DATA.login.placeholder) + '" autocomplete="off">' +
+      '<button class="btn" onclick="App.tryLogin()">登 录</button>' +
+      '<div class="login-err" id="login-err"></div>' +
+      '</div></div></div>';
+  };
+  VIEWS.login.after = function () {
+    var inp = $('pwd');
+    if (inp) {
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') App.tryLogin();
+      });
+      setTimeout(function () { inp.focus(); }, 200);
+    }
+    startHeartbeat();
+  };
+
+  /* --- 名单 --- */
+  VIEWS.log = function () {
+    var rows = DATA.log.rows.map(function (r, i) {
+      var cls = r.you ? 'you' : '';
+      var st = r.st === '未退房' ? '<span class="st-bad">' + esc(r.st) + '</span>' : esc(r.st);
+      return '<tr class="' + cls + '" data-r="' + i + '">' +
+        '<td>' + r.n + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.in) + '</td>' +
+        '<td>' + st + '</td><td>' + esc(r.note) + '</td></tr>';
+    }).join('');
+    return '<div class="sys"><div class="wrap">' +
+      '<div class="page-title">' + esc(DATA.log.title) + '</div>' +
+      '<div class="page-sub">共 ' + (DATA.log.rows.length) + ' 条记录 · 第 18 行等待登记</div>' +
+      '<table class="sys-table"><thead><tr>' + DATA.log.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead>' +
+      '<table class="sys-table"><thead><tr>' + DATA.log.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead>' +
+      '<tbody id="log-body">' + rows + '</tbody></table>' +
+      '<div class="scan-line" id="scan-line"></div>' +
+      '<div class="devtools-note" style="min-height:18px;margin-top:8px;font-size:12px;color:#7d1f1f;"></div>' +
+      '<div class="sys-welcome" id="sys-welcome" style="display:none;">' + esc(DATA.log.welcome) + '</div>' +
+      '<div class="sys-question" id="sys-q" style="display:none;">' + esc(DATA.log.question) + '</div>' +
+      '</div></div>';
+  };
+  VIEWS.log.after = function () {
+    startHeartbeat();
+    startDrone();
+    fetchLocation(function () {
+      setTimeout(runScan, 600);
+    });
+  };
+
+  /* 名单扫描动画 */
+  function runScan() {
+    var box = $('scan-line');
+    if (!box) return;
+    var addLine = function (k, v, cls) {
+      var d = document.createElement('div');
+      d.innerHTML = '<span class="k">' + esc(k) + '</span> : <span class="v">' + esc(v) + '</span>';
+      box.appendChild(d);
+      d.scrollIntoView({ block: 'nearest' });
+      return d;
+    };
+    var hasCoord = geo.lat && geo.lng;
+    var coordText = hasCoord ? geo.lat.toFixed(5) + '°, ' + geo.lng.toFixed(5) + '°' : '';
+    var locText = geo.city ? geo.city + (coordText ? ' (' + coordText + ')' : '') : (geo.denied ? '定位被拒绝' : '未知');
+    var addrText = geo.address || (geo.denied ? '无法获取(定位权限被拒绝)' : (hasCoord ? '逆地理编码失败' : '未知'));
+    var fps = [
+      { k: '设备识别', v: fp.browser + ' / ' + fp.os },
+      { k: '时区', v: fp.tz },
+      { k: '定位坐标', v: coordText || (geo.denied ? '定位被拒绝' : '未知') },
+      { k: '精确地址', v: addrText },
+      { k: '语言', v: fp.lang },
+      { k: '本次会话', v: fmtTime(Date.now()) },
+      { k: '访客编号', v: '18' }
+    ];
+    var i = 0;
+    var t = setInterval(function () {
+      if (i < fps.length) {
+        addLine(fps[i].k, fps[i].v);
+        i += 1;
+        return;
+      }
+      clearInterval(t);
+      completeRegistration();
+    }, 650);
+  }
+
+  function completeRegistration() {
+    var row17 = document.querySelector('.sys-table tr.you[data-r="16"]');
+    var row18 = document.querySelector('.sys-table tr.you[data-r="17"]');
+    var box = $('scan-line');
+    if (!box || !row18) return;
+    var done = document.createElement('div');
+    done.innerHTML = '<span class="k">登记完成</span> : <span class="v" style="color:#d6dccf;">' +
+      esc(DATA.log.youRow) + ' · 第 18 位</span>';
+    box.appendChild(done);
+    row18.querySelector('td:nth-child(2)').textContent = '访客(你)';
+    row18.querySelector('td:nth-child(3)').textContent = fmtTime(Date.now());
+    row18.querySelector('td:nth-child(4)').textContent = '登记完成';
+    row18.querySelector('td:nth-child(5)').textContent = '欢迎。';
+    if (devtoolsOpen) {
+      var d = document.createElement('div');
+      d.innerHTML = '<span class="k">检测到</span> : <span class="v" style="color:#a32020;">' +
+        esc(DATA.log.devtoolsLine) + '</span>';
+      box.appendChild(d);
+    }
+    collect('you');
+    goodSfx();
+    glitchSfx();
+    $('sys-welcome').style.display = '';
+    setTimeout(function () {
+      $('sys-q').style.display = '';
+      setTimeout(function () { go('end'); }, 3800);
+    }, 1200);
+  }
+
+  /* --- 结局 --- */
+  VIEWS.end = function () {
+    return '<div class="void-page"><div class="end-stage" id="end-stage">' +
+      '<div id="stage-root"></div>' +
+      '<div class="end-actions" id="end-actions" style="display:none;">' +
+      '<button class="end-btn" onclick="App.closeEnd()">' + esc(DATA.end.closeBtn) + '</button></div>' +
+      '<div class="end-whisper" id="end-whisper" style="display:none;">' +
+      '这个页面没有关闭按钮。<br>关掉我,或者留下来。</div>' +
+      '</div></div>';
+  };
+  VIEWS.end.after = function () {
+    collect('end');
+    stopHeartbeat();
+    setTimeout(runEnd, 600);
+  };
+
+  function runEnd() {
+    var stage = $('end-stage');
+    var root = $('stage-root');
+    stage.classList.add('shake');
+    glitchSfx();
+    setTimeout(function () { stage.classList.remove('shake'); }, 2200);
+    root.innerHTML = '';
+    var glitchBox = document.createElement('div');
+    glitchBox.className = 'glitch-box';
+    root.appendChild(glitchBox);
+    var lines = DATA.end.glitchLines;
+    lines.forEach(function (l, i) {
+      var d = document.createElement('div');
+      d.className = 'g' + (i === lines.length - 1 ? ' bad' : '');
+      d.textContent = l;
+      d.style.animationDelay = (i * 420) + 'ms';
+      glitchBox.appendChild(d);
+    });
+    setTimeout(showEyes, lines.length * 420 + 700 - 1000);
+    setTimeout(function () {
+      stage.classList.add('shake');
+      glitchSfx();
+      setTimeout(function () {
+        stage.classList.remove('shake');
+        removeEyes();
+        root.innerHTML = '';
+        typeEndLines();
+      }, 900);
+    }, lines.length * 420 + 700);
+  }
+
+  /* 结局:满屏红色眼睛(glitch 结束前 1 秒浮现) */
+  function showEyes() {
+    var old = document.getElementById('eyes-layer');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var layer = document.createElement('div');
+    layer.className = 'eyes-layer';
+    layer.id = 'eyes-layer';
+    document.body.appendChild(layer);
+    var count = 200 + Math.floor(Math.random() * 80);
+    for (var i = 0; i < count; i++) {
+      var eye = document.createElement('span');
+      eye.className = 'eye';
+      var w = 6 + Math.random() * 42;
+      eye.style.width = w.toFixed(1) + 'px';
+      eye.style.height = (w * 0.62).toFixed(1) + 'px';
+      eye.style.left = (Math.random() * 100).toFixed(2) + '%';
+      eye.style.top = (Math.random() * 100).toFixed(2) + '%';
+      eye.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      eye.style.animationDelay = (-Math.random() * 3).toFixed(2) + 's';
+      eye.style.animationDuration = (2 + Math.random() * 3).toFixed(2) + 's';
+      eye.style.setProperty('--pd', (4 + Math.random() * 6).toFixed(2) + 's');
+      eye.innerHTML = '<i class="iris"></i><i class="pupil"></i><i class="glint"></i>';
+      layer.appendChild(eye);
+    }
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { layer.classList.add('on'); });
+    });
+  }
+
+  function removeEyes() {
+    var el = document.getElementById('eyes-layer');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  }
+
+  function typeEndLines() {
+    var stage = $('stage-root');
+    var container = document.createElement('div');
+    container.className = 'end-line';
+    stage.appendChild(container);
+    var now = Date.now();
+    var dur = fmtDur(now - sessionStart);
+    var lines = DATA.end.lines.map(function (l) {
+      return l
+        .replace('{browser}', fp.browser)
+        .replace('{os}', fp.os)
+        .replace('{tz}', fp.tz)
+        .replace('{first}', fmtTime(state.firstSeen))
+        .replace('{now}', fmtTime(now))
+        .replace('{dur}', dur)
+        .replace('{clicks}', counter.clicks)
+        .replace('{moves}', counter.moves)
+        .replace('{city}', geo.address || geo.city || '未知之处');
+    });
+    if (devtoolsOpen) {
+      lines.splice(9, 0, DATA.end.devtoolsLine);
+    }
+    var warmIndex = 8;
+    container.innerHTML = '';
+    var typeNext = function (idx) {
+      if (idx >= lines.length) {
+        document.title = '你还在吗?';
+        showEndActions();
+        return;
+      }
+      var line = lines[idx];
+      var d = document.createElement('div');
+      d.className = 'end-line' + (idx >= warmIndex ? ' warm' : '');
+      container.appendChild(d);
+      typeLine(d, line, idx >= warmIndex ? 90 : 46, function () {
+        setTimeout(function () { typeNext(idx + 1); }, 260);
+      });
+    };
+    setTimeout(function () { typeNext(0); }, 500);
+  }
+
+  function typeLine(el, text, speed, done) {
+    el.textContent = '';
+    var chars = Array.from(text);
+    var i = 0;
+    var t = setInterval(function () {
+      if (i < chars.length) {
+        el.textContent += chars[i];
+        i += 1;
+      } else {
+        clearInterval(t);
+        if (done) done();
+      }
+    }, speed);
+  }
+
+  function showEndActions() {
+    var actions = $('end-actions');
+    var whisper = $('end-whisper');
+    actions.style.display = '';
+    setTimeout(function () { whisper.style.display = ''; }, 2200);
+  }
+
+  /* --- 404 --- */
+  VIEWS['404'] = function () {
+    return '<div class="page paper"><div class="wrap">' +
+      '<div class="nf">' +
+      '<div class="code">404</div>' +
+      '<div class="msg">' + esc(DATA.p404.msg) + '</div>' +
+      '<div class="sub">' + esc(DATA.p404.sub) + '</div>' +
+      '<a href="javascript:void(0)" onclick="App.go(\'home\')">' + esc(DATA.p404.back) + '</a>' +
+      '<div class="whisper">' + esc(DATA.p404.whisper) + '</div>' +
+      '</div></div></div>';
+  };
+
+  /* ================= 搜索逻辑 ================= */
+
+  function doSearch() {
+    var inp = $('se-input');
+    if (!inp) return;
+    var q = inp.value.trim();
+    if (!q) return;
+    clickSfx();
+    var box = $('se-results');
+    var hit = DATA.search.keywords[q];
+    if (hit) {
+      if (!hasClue('search')) collect('search');
+      box.innerHTML = hit.map(function (r) {
+        return '<div class="res" onclick="App.go(\'' + (r.to || '404') + '\')">' +
+          '<h4>' + esc(r.title) + '</h4>' +
+          '<div class="url">' + esc(r.url) + '</div>' +
+          '<p>' + esc(r.snippet) + '</p></div>';
+      }).join('');
+    } else {
+      box.innerHTML = '<p class="none">' + esc(DATA.search.fallback.replace('{q}', q)) + '</p>';
+    }
+  }
+
+  /* ================= 登录逻辑 ================= */
+
+  var PASSWORD = '1987';
+  function tryLogin() {
+    var inp = $('pwd');
+    if (!inp) return;
+    var v = inp.value.trim();
+    var err = $('login-err');
+    if (v === PASSWORD) {
+      goodSfx();
+      err.style.color = '#2e7d32';
+      err.textContent = DATA.login.ok;
+      collect('pwd');
+      setTimeout(function () { go('log'); }, 900);
+    } else {
+      badSfx();
+      state.pwdFails += 1;
+      saveState();
+      if (state.pwdFails >= 3) {
+        err.textContent = DATA.login.hint;
+      } else {
+        err.textContent = state.pwdFails >= 2 ? DATA.login.failMore : DATA.login.fail;
+      }
+      inp.select();
+    }
+  }
+
+  /* ================= 结局按钮 ================= */
+
+  function closeEnd() {
+    var actions = $('end-actions');
+    var whisper = $('end-whisper');
+    actions.style.display = 'none';
+    whisper.textContent = '关不掉的。晚安。';
+    /* 标题反复横跳:1.5 秒间隔,来回 5 次,最后停在「你还在吗?」 */
+    var titles = ['你还在吗?', '雾岭村旅游官网'];
+    var rounds = 5;
+    var interval = 1500;
+    document.title = titles[0];
+    for (var i = 1; i <= rounds * 2; i++) {
+      (function (k) {
+        setTimeout(function () { document.title = titles[k % 2]; }, k * interval);
+      })(i);
+    }
+    tone(160, 1.2, 'sine', 0.04);
+  }
+
+  /* ================= 控制台彩蛋 ================= */
+
+  function consoleEasterEgg() {
+    try {
+      var m = DATA.end.consoleMsg;
+      console.log(m[0], 'background:#7d1f1f;color:#f0e6d2;padding:6px 12px;font-size:16px;letter-spacing:.2em;', '');
+      console.log('');
+      console.log('%c' + m[1], 'color:#9aa09a;');
+      console.log('%c' + m[2], 'color:#9aa09a;');
+      console.log('%c' + m[3], 'color:#9aa09a;');
+      console.log('%c' + m[4], 'color:#a32020;');
+    } catch (e) {}
+  }
+
+  /* ================= 暴露与启动 ================= */
+
+  window.App = {
+    go: go,
+    back: function () {
+      if (window.history.length > 1) { window.history.back(); }
+      else { go('home'); }
+    },
+    doSearch: doSearch,
+    tryLogin: tryLogin,
+    closeEnd: closeEnd,
+    blogOpen: function (i) {
+      var el = document.querySelector('.posts li[data-p="' + i + '"] .post-body');
+      if (el) {
+        clickSfx();
+        el.style.background = 'rgba(163,32,32,.06)';
+        el.style.borderLeftColor = '#7d1f1f';
+      }
+    }
+  };
+
+  function init() {
+    updateProgress();
+    consoleEasterEgg();
+    router();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+
+</script>
+</body>
+</html>
